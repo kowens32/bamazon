@@ -6,14 +6,10 @@ USE bamazon;
 
 CREATE TABLE products (
 item_id INTEGER(11) AUTO_INCREMENT NOT NULL,
-product_name
-department_name VARCHAR(30) NOT NULL
-price
-stock_quantity
-
-
-
-
-
+product_name VARCHAR(30) NOT NULL,
+department_name VARCHAR(30) NOT NULL,
+price INTEGER(10),
+stock_quantity INTEGER(10)
 
 )
+

@@ -1,3 +1,4 @@
+var inquirer = require('inquirer');
 var mysql = require('mysql');
 
 var connection = mysql.createConnection({
@@ -8,13 +9,31 @@ var connection = mysql.createConnection({
     database: 'bamazon'
 });
 
- connection.conntect(function(err) {
-     if(err) throw err;
-     console.log('connected as id ' + connection.threadID);
-        //insert functions here
- });
 
- function idSelection() {
-     connection.query('SELECT * FROM  products WHERE id = ?', [user query])
- }
+connection.connect(function(err) {
+    if(err) throw err;
+    console.log("connected as id " + connection.threadId);
+    //insert functions here
+    runSearch();
+});
+
+function runSearch() {
+    inquirer
+        .prompt([{
+            name: 'item-id',
+            type: 'input',
+            message: 'What is your product id?'
+        },
+            {
+            name: 'quant',
+            type: 'input',
+            message: 'How much would you like to buy'
+        }
+
+])
+        .then(function(answer){
+        })
+};
+
+
 

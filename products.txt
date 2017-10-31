@@ -1,0 +1,12 @@
+item_id     product_name    department_name     price     stock_quantity
+0   leash   pets    15.99   45
+1   pan kitchen 21.99   30
+2   blanket housewares  35.00   56
+3   headphones  exercise    45.99   20
+4   shampoo personal 9.99   23
+5   conditioner personal    9.99 25
+6   collar pets 18.00   35
+7   mop kitchen 11.00   17
+8   pillow  housewares  12.99   34
+9   spatula kitchen 9.99    112
+10  dog treats  pet 16.99   97

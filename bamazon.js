@@ -15,22 +15,22 @@ connection.connect(function(err) {
     if(err) throw err;
     console.log("connected as id " + connection.threadId);
     //insert functions here
-    display();
+    buyProduct();
 
 
 });
 
 
-var display = function(){
-    connection.query('SELECT item_id, product_name, price FROM products', function(err,res) {
-        if (err) throw err;
-        for (var i = 0; i < res.length; i ++){
-            console.log("ID: " + res[i].item_id + " | " + "NAME: " + res[i].product_name + " | " + "PRICE: " + res[i].price);
-        }
-        console.log('-------------------------------------');
-    });
-
-}
+// var display = function(){
+//     connection.query('SELECT item_id, product_name, price FROM products', function(err,res) {
+//         if (err) throw err;
+//         for (var i = 0; i < res.length; i ++){
+//             console.log("ID: " + res[i].item_id + " | " + "NAME: " + res[i].product_name + " | " + "PRICE: " + res[i].price);
+//         }
+//         console.log('-------------------------------------');
+//     });
+//
+// }
 
 function runSearch() {
     inquirer
@@ -53,15 +53,14 @@ function runSearch() {
 
 }
 
-var buyProduct = function(){
-    connection.query('SELECT item_id, product_name, price FROM products', function(err,res) {
-        if (err) throw err;
-        for (var i = 0; i < res.length; i ++){
-            console.log("ID: " + res[i].item_id + " | " + "NAME: " + res[i].product_name + " | " + "PRICE: " + res[i].price);
-        }
-        console.log('-------------------------------------');
-    });
 
+var buyProduct = function(){
+    connection.query('SELECT item_id, product_name, price FROM products', function(err,results) {
+        if (err) throw err;
+        for (var i = 0; i < results.length; i ++){
+            console.log("ID: " + results[i].item_id + " | " + "NAME: " + results[i].product_name + " | " + "PRICE: " + results[i].price);
+            console.log('-------------------------------------');
+        }
 
 
     inquirer
@@ -81,11 +80,11 @@ var buyProduct = function(){
             var cQuant;
             var cProduct;
             var cPrice;
-            for (var i = 0; i < res.length; i ++){
-                if (res[i].item_id === parseInt(answer.productId)) {
-                    cQuant = res[i].stock_quantity;
-                    cProduct = res[i].product_name;
-                    cPrice = res[i].price
+            for (var i = 0; i < results.length; i ++){
+                if (results[i].item_id === parseInt(answer.productId)) {
+                    cQuant = results[i].stock_quantity;
+                    cProduct = results[i].product_name;
+                    cPrice = results[i].price
                 }
             }
 
@@ -107,4 +106,6 @@ var buyProduct = function(){
 
         });
 
+
+});
 };

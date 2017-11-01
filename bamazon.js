@@ -55,7 +55,7 @@ function runSearch() {
 
 
 var buyProduct = function(){
-    connection.query('SELECT item_id, product_name, price FROM products', function(err,results) {
+    connection.query('SELECT * FROM products', function(err,results) {
         if (err) throw err;
         for (var i = 0; i < results.length; i ++){
             console.log("ID: " + results[i].item_id + " | " + "NAME: " + results[i].product_name + " | " + "PRICE: " + results[i].price);
@@ -81,6 +81,7 @@ var buyProduct = function(){
             var cProduct;
             var cPrice;
             for (var i = 0; i < results.length; i ++){
+                console.log('mm', results.length);
                 if (results[i].item_id === parseInt(answer.productId)) {
                     cQuant = results[i].stock_quantity;
                     cProduct = results[i].product_name;
@@ -89,8 +90,9 @@ var buyProduct = function(){
             }
 
         if (cQuant >= parseInt(answer.quant) && (cQuant > 0) && (answer.quant > 0)){
-                connection.query('UPDATE products SET ? WHERE?') [{
+                connection.query('UPDATE products SET ? WHERE ?' [{
                     stock_quanity: (cQuant - answer.quant),
+
                 }, {
                     item_id: answer.productId
                 }],
@@ -98,7 +100,9 @@ var buyProduct = function(){
                     if (err) throw err;
                     console.log('INVOICE OF ' + answer.quant + '' + cProduct);
                     console.log('TOTAL COST ' + '$' + (answer.quant * cPrice));
-                    }
+                    });
+
+                console.log('nn', cPrice);
         }
         else {
             console.log('INSUFFICIENT QUANTITY!');

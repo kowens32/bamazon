@@ -1,6 +1,6 @@
-var inquirer = require('inquirer');
+
 var mysql = require('mysql');
-var Table = require('cli-table');
+var inquirer = require('inquirer');
 
 var connection = mysql.createConnection({
     host: 'localhost',
@@ -15,29 +15,22 @@ connection.connect(function(err) {
     if(err) throw err;
     console.log("connected as id " + connection.threadId);
     //insert functions here
-    runSearch();
     display();
+
+
 });
+
 
 var display = function(){
     connection.query('SELECT item_id, product_name, price FROM products', function(err,res) {
         if (err) throw err;
-
-        var table = new Table ({
-            head: ['ID', 'Product', 'Price'],
-            colWidths:[100,200,200]
-        });
-        for (var i = 0; i < results.length; i++){
-            table.push(res[i].item_id);
-
+        for (var i = 0; i < res.length; i ++){
+            console.log("ID: " + res[i].item_id + " | " + "NAME: " + res[i].product_name + " | " + "PRICE: " + res[i].price);
         }
-        console.log('what is this ' +table.toString());
-        runSearch();
+        console.log('-------------------------------------');
     });
 
-};
-
-
+}
 
 function runSearch() {
     inquirer
@@ -47,12 +40,12 @@ function runSearch() {
             message: 'What is your product id?'
         },
             {
-            name: 'quant',
-            type: 'input',
-            message: 'How much would you like to buy'
-        }
+                name: 'quant',
+                type: 'input',
+                message: 'How much would you like to buy'
+            }
 
-])
+        ])
         .then(function(answer){
 
 
@@ -60,26 +53,58 @@ function runSearch() {
 
 }
 
+var buyProduct = function(){
+    connection.query('SELECT item_id, product_name, price FROM products', function(err,res) {
+        if (err) throw err;
+        for (var i = 0; i < res.length; i ++){
+            console.log("ID: " + res[i].item_id + " | " + "NAME: " + res[i].product_name + " | " + "PRICE: " + res[i].price);
+        }
+        console.log('-------------------------------------');
+    });
 
-//
-// function readProducts () {
-//
-// }
-//
-//
-//
-//     connection.query('UPDATE products SET stock_quantity = stock_quantity - answer.quant')
-//
-//
-//     function(err) {
-//         if (connection.query(
-//                 answer.input < 'SELECT stock_quantity FROM products'));
-//         console.log('INSUFFICIENT QUANTITY')
-//     ) throw (err);
-//
-//
-// })
-// )
-// })
-//
-//
+
+
+    inquirer
+        .prompt([{
+            name: 'productId',
+            type: 'input',
+            message: 'What is your product id?'
+        },
+            {
+                name: 'quant',
+                type: 'input',
+                message: 'How much would you like to buy'
+            }
+
+        ])
+        .then(function(answer){
+            var cQuant;
+            var cProduct;
+            var cPrice;
+            for (var i = 0; i < res.length; i ++){
+                if (res[i].item_id === parseInt(answer.productId)) {
+                    cQuant = res[i].stock_quantity;
+                    cProduct = res[i].product_name;
+                    cPrice = res[i].price
+                }
+            }
+
+        if (cQuant >= parseInt(answer.quant) && (cQuant > 0) && (answer.quant > 0)){
+                connection.query('UPDATE products SET ? WHERE?') [{
+                    stock_quanity: (cQuant - answer.quant),
+                }, {
+                    item_id: answer.productId
+                }],
+                    function(err) {
+                    if (err) throw err;
+                    console.log('INVOICE OF ' + answer.quant + '' + cProduct);
+                    console.log('TOTAL COST ' + '$' + (answer.quant * cPrice));
+                    }
+        }
+        else {
+            console.log('INSUFFICIENT QUANTITY!');
+        }
+
+        });
+
+};

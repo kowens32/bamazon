@@ -90,15 +90,15 @@ var buyProduct = function(){
             }
 
         if (cQuant >= parseInt(answer.quant) && (cQuant > 0) && (answer.quant > 0)){
-                connection.query('UPDATE products SET ? WHERE ?' [{
-                    stock_quanity: (cQuant - answer.quant),
-
+                console.log("here");
+                connection.query('UPDATE products SET ? WHERE ?', [{
+                    stock_quantity: (cQuant - answer.quant),
                 }, {
                     item_id: answer.productId
                 }],
                     function(err) {
                     if (err) throw err;
-                    console.log('INVOICE OF ' + answer.quant + '' + cProduct);
+                    console.log('INVOICE OF ' + answer.quant + ' ' + cProduct);
                     console.log('TOTAL COST ' + '$' + (answer.quant * cPrice));
                     });
 

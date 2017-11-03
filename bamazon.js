@@ -21,16 +21,7 @@ connection.connect(function(err) {
 });
 
 
-// var display = function(){
-//     connection.query('SELECT item_id, product_name, price FROM products', function(err,res) {
-//         if (err) throw err;
-//         for (var i = 0; i < res.length; i ++){
-//             console.log("ID: " + res[i].item_id + " | " + "NAME: " + res[i].product_name + " | " + "PRICE: " + res[i].price);
-//         }
-//         console.log('-------------------------------------');
-//     });
-//
-// }
+
 
 function runSearch() {
     inquirer

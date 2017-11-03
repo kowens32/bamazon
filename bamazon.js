@@ -72,7 +72,7 @@ var buyProduct = function(){
             var cProduct;
             var cPrice;
             for (var i = 0; i < results.length; i ++){
-                console.log('mm', results.length);
+
                 if (results[i].item_id === parseInt(answer.productId)) {
                     cQuant = results[i].stock_quantity;
                     cProduct = results[i].product_name;
@@ -81,7 +81,7 @@ var buyProduct = function(){
             }
 
         if (cQuant >= parseInt(answer.quant) && (cQuant > 0) && (answer.quant > 0)){
-                console.log("here");
+
                 connection.query('UPDATE products SET ? WHERE ?', [{
                     stock_quantity: (cQuant - answer.quant),
                 }, {
@@ -93,7 +93,7 @@ var buyProduct = function(){
                     console.log('TOTAL COST ' + '$' + (answer.quant * cPrice));
                     });
 
-                console.log('nn', cPrice);
+
         }
         else {
             console.log('INSUFFICIENT QUANTITY!');
